@@ -148,11 +148,19 @@ const getProduct = async (slug: string) => {
   return products[slug as keyof typeof products] || null;
 };
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+}
+
+
+export async function generateMetadata({ params }: PageProps) {
+  const resolvedParams = await params; 
   const product = await getProduct(params.slug)
   if (!product) return { title: "Product Not Found" }
   return {
-    title: `${product.name} - ProSport Outfitters`,
+    title: `${product.name} - ProSport Hub`,
     description: product.description,
     openGraph: {
       title: product.name,
@@ -162,7 +170,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
+export default async function ProductPage({ params }: PageProps) {
+  const resolvedParams = await params;
   const product = await getProduct(params.slug)
   if (!product) notFound()
 

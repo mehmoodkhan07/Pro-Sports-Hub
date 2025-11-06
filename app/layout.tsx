@@ -24,6 +24,7 @@ const display = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://pro-sports-hub.vercel.app"), // use your real deployed domain
   title: "Pro-Sport HUB",
   description:
     "Shop performance sports gear, running shoes, football boots, basketball apparel, gym equipment, and more. Pro-grade gear for every athlete. Free shipping over $100.",
