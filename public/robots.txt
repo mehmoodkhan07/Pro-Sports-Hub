@@ -1,0 +1,11 @@
+# robots.txt for Pro-Sports Hub
+User-agent: *
+Allow: /
+
+# Disallow admin or private routes (if any)
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://pro-sports-hub.vercel.app/sitemap.xml
