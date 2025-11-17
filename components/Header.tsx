@@ -154,7 +154,7 @@ export default function Header() {
     <div className="fixed right-0 top-0 w-4/5 max-w-sm bg-gradient-to-b from-amber-400 to-yellow-300 px-6 py-6 shadow-2xl overflow-y-auto transition-transform duration-300">
       <div className="flex items-center justify-between mb-6">
         <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-          <span className="text-xl font-bold text-amber-800">Pro-Sport HUB</span>
+          <span className="text-xl font-bold text-amber-600">Pro-Sport HUB</span>
         </Link>
         <button
           aria-label="Close menu"
@@ -172,7 +172,7 @@ export default function Header() {
             <Link
               href={item.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block rounded-lg px-3 py-1 text-base font-semibold text-gray-900 hover:bg-amber-50 transition"
+              className="block rounded-lg px-3 py-1 text-base font-semibold text-gray-700 hover:bg-amber-50 transition"
             >
               {item.name}
             </Link>
