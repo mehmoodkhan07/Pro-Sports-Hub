@@ -1,69 +1,68 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ShoppingCart, Plus, Minus, Heart } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import { ShoppingCart, Plus, Minus, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useFavourites } from "@/components/FavouritesPanel";
-
+import { useCart } from "@/components/CartContext";
+import toast from "react-hot-toast";
 
 interface Product {
-  id: string
-  name: string
-  price: number
-  inStock: boolean
+  id: number;
+  name: string;
+  price: number;
+  image?: string;
+  inStock: boolean;
 }
 
 interface AddToCartButtonProps {
-  product: Product
+  product: Product;
 }
 
 export default function AddToCartButton({ product }: AddToCartButtonProps) {
-  const [quantity, setQuantity] = useState(1)
-  const [selectedSize, setSelectedSize] = useState("")
-  const [selectedColor, setSelectedColor] = useState("")
-  const [isAddingToCart, setIsAddingToCart] = useState(false)
-  const [isWishlisted, setIsWishlisted] = useState(false)
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
   const { toggleFavourite, isFavourite } = useFavourites();
+  const { addToCart } = useCart(); // ✅ connect to CartContext
 
-  const sizes = ["S", "M", "L", "XL", "XXL"]
-  const colors = ["Brown", "Black", "Tan"]
+  const sizes = ["S", "M", "L", "XL", "XXL"];
+  const colors = ["Brown", "Black", "Tan"];
 
   const handleAddToCart = async () => {
     if (!selectedSize || !selectedColor) {
-      alert("Please select size and color")
-      return
+      toast.error("Please select size and colour before adding to cart!");
+      return;
     }
 
-    setIsAddingToCart(true)
+    setIsAddingToCart(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    // Here you would typically call your cart API
-    console.log("Adding to cart:", {
-      productId: product.id,
+    // ✅ Add to cart using CartContext
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image || "/default.jpg",
       quantity,
-      size: selectedSize,
-      color: selectedColor,
-    })
+    });
 
-    setIsAddingToCart(false)
-    alert("Added to cart successfully!")
-  }
+    // ✅ Show a nice toast notification
+    toast.success(`${product.name} added to your cart 🛒`, {
+      duration: 2500,
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
 
-  const handleWishlist = () => {
-    setIsWishlisted(!isWishlisted)
-    // Here you would typically call your wishlist API
-  }
+    setIsAddingToCart(false);
+  };
 
-  const incrementQuantity = () => {
-    setQuantity((prev) => prev + 1)
-  }
-
-  const decrementQuantity = () => {
-    setQuantity((prev) => Math.max(1, prev - 1))
-  }
+  const incrementQuantity = () => setQuantity((prev) => prev + 1);
+  const decrementQuantity = () => setQuantity((prev) => Math.max(1, prev - 1));
 
   return (
     <div className="space-y-6">
@@ -87,9 +86,9 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
         </div>
       </div>
 
-      {/* Color Selection */}
+      {/* Colour Selection */}
       <div>
-        <h3 className="text-sm font-medium text-gray-900 mb-3">Color</h3>
+        <h3 className="text-sm font-medium text-gray-900 mb-3">Colour</h3>
         <div className="flex gap-2">
           {colors.map((color) => (
             <button
@@ -107,7 +106,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
         </div>
       </div>
 
-      {/* Quantity Selection */}
+      {/* Quantity */}
       <div>
         <h3 className="text-sm font-medium text-gray-900 mb-3">Quantity</h3>
         <div className="flex items-center gap-3">
@@ -120,7 +119,10 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
               <Minus className="w-4 h-4" />
             </button>
             <span className="px-4 py-2 font-medium">{quantity}</span>
-            <button onClick={incrementQuantity} className="p-2 hover:bg-gray-50 transition-colors">
+            <button
+              onClick={incrementQuantity}
+              className="p-2 hover:bg-gray-50 transition-colors"
+            >
               <Plus className="w-4 h-4" />
             </button>
           </div>
@@ -141,7 +143,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
       <div className="flex gap-4">
         <Button
           onClick={handleAddToCart}
-          disabled={!product.inStock || isAddingToCart || !selectedSize || !selectedColor}
+          disabled={!product.inStock || isAddingToCart}
           className="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-3 text-lg font-semibold"
         >
           {isAddingToCart ? (
@@ -157,19 +159,24 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
           )}
         </Button>
 
+        {/* ❤️ Favourite Button */}
         <Button
-  onClick={() =>
-    toggleFavourite({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-    })
-  }
-  variant="outline"
-  className="p-3"
->
-  <Heart className={`w-5 h-5 ${isFavourite(product.id) ? "fill-red-500 text-red-500" : ""}`} />
-</Button>
+          onClick={() =>
+            toggleFavourite({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+            })
+          }
+          variant="outline"
+          className="p-3"
+        >
+          <Heart
+            className={`w-5 h-5 ${
+              isFavourite(product.id) ? "fill-red-500 text-red-500" : ""
+            }`}
+          />
+        </Button>
       </div>
 
       {/* Buy Now Button */}
@@ -181,12 +188,12 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
         Buy Now
       </Button>
 
-      {/* Product Availability Info */}
+      {/* Info */}
       <div className="text-sm text-gray-600 space-y-1">
         <p>• Free shipping on orders over $100</p>
         <p>• Usually ships within 1-2 business days</p>
         <p>• 30-day return policy</p>
       </div>
     </div>
-  )
+  );
 }

@@ -9,6 +9,7 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import { CartProvider } from "@/components/CartContext";
 import { FavouritesProvider } from "@/components/FavouritesPanel";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -92,6 +93,7 @@ export default function RootLayout({
           <FavouritesProvider>
             <Header />
             <main>{children}</main>
+            <Toaster position="top-center" />
             <Footer />
             <WhatsAppFloat />
             <ExitIntentPopup />

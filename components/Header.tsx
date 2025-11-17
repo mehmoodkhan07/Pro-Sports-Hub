@@ -82,19 +82,8 @@ export default function Header() {
           <span>PRO-SPORT HUB</span>
         </Link>
 
-        {/* 🔸 Mobile menu button */}
-        <div className="flex lg:hidden">
-          <button
-            aria-label="Open menu"
-            className="p-2 rounded-md text-white hover:bg-white/20 transition"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-        </div>
-
-        {/* 🔸 Desktop Navigation */}
-        <div className="hidden pl-3 lg:flex lg:gap-x-8">
+        {/* 🔸 Desktop Nav */}
+        <div className="hidden lg:flex lg:gap-x-8">
           {navigation.map((item) => (
             <div key={item.name} className="relative group">
               <Link
@@ -104,7 +93,7 @@ export default function Header() {
                 {item.name}
               </Link>
               {item.submenu && (
-                <div className="absolute left-0 mt-3 w-48 bg-white rounded-md shadow-lg opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transiti duration-300 pointer-events-none group-hover:pointer-events-auto">
+                <div className="absolute left-0 mt-3 w-48 bg-white rounded-md shadow-lg opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition duration-300 pointer-events-none group-hover:pointer-events-auto">
                   <div className="py-2">
                     {item.submenu.map((subitem) => (
                       <Link
@@ -122,22 +111,24 @@ export default function Header() {
           ))}
         </div>
 
-        {/* 🔸 Desktop Icons */}
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4 relative">
-          {/* Search button */}
-    <SearchBar/>
-          {/* User icon */}
+        {/* 🔸 Icons (Now visible on ALL screens) */}
+        <div className="flex items-center gap-x-2 sm:gap-x-4">
+          <div className="hidden sm:block">
+            <SearchBar />
+          </div>
+          <div className="block sm:hidden">
+            {/* Smaller search icon version for mobile */}
+            <SearchBar />
+          </div>
 
-              <UserMenu/>
+          <UserMenu />
 
-
-          {/* Cart icon */}
           <Link href="/checkout" className="relative">
             <Button
               variant="ghost"
               size="sm"
               aria-label="Shopping cart"
-              className="hover:bg-white/20 text-amber-800"
+              className="bg-white hover:bg-amber-400 text-amber-600 "
             >
               <ShoppingCart className="h-5 w-5" />
               {totalItems > 0 && (
@@ -147,57 +138,67 @@ export default function Header() {
               )}
             </Button>
           </Link>
+
+          {/* Mobile menu button */}
+          <button
+            aria-label="Open menu"
+            className="lg:hidden p-2 rounded-md text-amber-600 hover:bg-white/20 transition"
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <Menu className="h-6 w-6" />
+          </button>
         </div>
       </nav>
 
       {/* 🔸 Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed  inset-0 z-50 bg-black/40 backdrop-blur-sm">
-          <div className="fixed  right-0 w-4/5 max-w-sm bg-white px-6 py-6 shadow-2xl overflow-y-scroll transition-transform duration-300">
-            <div className="flex items-center justify-between mb-6">
-              <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-                <span className="text-xl font-bold text-amber-800">Pro-Sport HUB</span>
-              </Link>
-              <button
-                aria-label="Close menu"
-                className="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
+  <div className="lg:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm">
+    <div className="fixed right-0 top-0 w-4/5 max-w-sm bg-gradient-to-b from-amber-400 to-yellow-300 px-6 py-6 shadow-2xl overflow-y-auto transition-transform duration-300">
+      <div className="flex items-center justify-between mb-6">
+        <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+          <span className="text-xl font-bold text-amber-800">Pro-Sport HUB</span>
+        </Link>
+        <button
+          aria-label="Close menu"
+          className="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <X className="h-6 w-6" />
+        </button>
+      </div>
 
-            {/* Mobile Links */}
-            <nav className="space-y-2">
-              {navigation.map((item) => (
-                <div key={item.name}>
+      {/* Mobile Links */}
+      <nav className="space-y-2 pb-2">
+        {navigation.map((item) => (
+          <div key={item.name}>
+            <Link
+              href={item.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block rounded-lg px-3 py-1 text-base font-semibold text-gray-900 hover:bg-amber-50 transition"
+            >
+              {item.name}
+            </Link>
+            {item.submenu && (
+              <div className="ml-3 space-y-1">
+                {item.submenu.map((subitem) => (
                   <Link
-                    href={item.href}
+                    key={subitem.name}
+                    href={subitem.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-amber-50 transition"
+                    className="block rounded-lg px-3 py-1 text-sm text-gray-700 hover:bg-gray-100 transition"
                   >
-                    {item.name}
+                    {subitem.name}
                   </Link>
-                  {item.submenu && (
-                    <div className="ml-3 space-y-1">
-                      {item.submenu.map((subitem) => (
-                        <Link
-                          key={subitem.name}
-                          href={subitem.href}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="block rounded-lg px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 transition"
-                        >
-                          {subitem.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </nav>
+                ))}
+              </div>
+            )}
           </div>
-        </div>
-      )}
+        ))}
+      </nav>
+    </div>
+  </div>
+)}
+
     </header>
   )
 }
