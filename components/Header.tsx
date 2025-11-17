@@ -64,7 +64,7 @@ export default function Header() {
     <header
       className={`relative top-0 left-0 w-full z-50 transition-all duration-500 backdrop-blur-md ${
         isScrolled
-          ? "bg-amber-500 shadow-lg py-2"
+          ? "bg-amber-500/95 shadow-lg py-2"
           : "bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 py-4"
       }`}
     >

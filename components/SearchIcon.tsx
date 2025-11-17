@@ -74,72 +74,116 @@ export default function SearchBar() {
 
   return (
     <div className="relative" ref={popupRef}>
-      {/* 🔍 Search Icon Button */}
+      {/* 🔍 Search Icon */}
       <Button
         variant="ghost"
         size="sm"
         aria-label="Search"
         onClick={() => setSearchOpen(!searchOpen)}
-        className="hover:bg-white/20 text-amber-800 dark:text-amber-300 transition-all"
+        className="hover:bg-amber-100 dark:hover:bg-amber-900/30 text-amber-700 dark:text-amber-300 transition-all  p-2"
       >
         <Search className="h-5 w-5" />
       </Button>
-
-      {/* 🔎 Search Popup */}
+  
+      {/* Popup */}
       {searchOpen && (
-        <div className="absolute right-1 top-9 bg-white dark:bg-gray-900 shadow-2xl rounded-xl p-3 flex flex-col gap-2 w-80 border border-gray-200 dark:border-gray-700 animate-in fade-in slide-in-from-top-2 z-50">
+        <div
+          className="
+            absolute right-1 top-8 
+            w-[61vw] sm:w-80 
+            bg-white dark:bg-gray-900 
+            border border-gray-200 dark:border-gray-700 
+            shadow-xl shadow-black/10 
+            rounded-2xl p-2 
+            animate-in fade-in slide-in-from-top-3 
+            z-50 
+          "
+        >
+          {/* Input */}
           <form onSubmit={handleSearch} className="flex items-center gap-2">
             <input
               type="text"
-              placeholder="Search products..."
+              placeholder="Search for sports items..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-grow px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none bg-transparent text-gray-800 dark:text-gray-100"
+              className="
+                flex-grow px-1 py-2 
+                text-sm
+                bg-gray-50 dark:bg-gray-800 
+                border border-gray-300 dark:border-gray-700 
+                rounded-xl
+                focus:ring-2 focus:ring-amber-500 
+                focus:outline-none 
+                text-gray-900 dark:text-gray-100
+                placeholder:text-gray-400 dark:placeholder:text-gray-500
+              "
             />
+  
             <Button
               type="submit"
-              className="bg-amber-600 hover:bg-amber-700 text-white text-sm px-3 py-2 rounded-lg transition-all"
+              className="
+                bg-amber-500 hover:bg-amber-600 
+                text-white  py-2 px-1
+                rounded-xl text-sm
+                transition-all shadow-sm
+              "
             >
               Go
             </Button>
+  
+            {/* Close */}
             <button
               type="button"
               onClick={() => setSearchOpen(false)}
-              className="text-gray-500 hover:text-red-600 transition"
-              aria-label="Close search"
+              className="text-gray-500 hover:text-red-600 transition py-1"
             >
               <X className="h-5 w-5" />
             </button>
           </form>
-
-          {/* 💡 Suggestions */}
+  
+          {/* Suggestions list */}
           {suggestions.length > 0 && (
-            <ul className="mt-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg max-h-48 overflow-y-auto text-sm">
+            <ul
+              className="
+                mt-3 
+                bg-gray-50 dark:bg-gray-800 
+                border border-gray-200 dark:border-gray-700 
+                rounded-xl 
+                max-h-56 overflow-y-auto
+              "
+            >
               {suggestions.map((item) => (
                 <li
                   key={item.id}
-                  className="px-3 py-2 hover:bg-amber-50 dark:hover:bg-gray-800 cursor-pointer text-gray-800 dark:text-gray-200 flex items-center gap-2"
+                  className="
+                    px-4 py-3 
+                    flex items-center gap-3 
+                    text-gray-800 dark:text-gray-200
+                    hover:bg-amber-100 dark:hover:bg-amber-900/30
+                    cursor-pointer transition rounded-lg
+                  "
                   onClick={() => handleSuggestionClick(item.slug)}
                 >
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-8 h-8 rounded object-cover"
+                    className="w-10 h-10 rounded-lg object-cover shadow-sm"
                   />
-                  <span>{item.name}</span>
+                  <span className="text-sm font-medium">{item.name}</span>
                 </li>
               ))}
             </ul>
           )}
-
-          {/* ❌ No results */}
+  
+          {/* No results */}
           {searchQuery && suggestions.length === 0 && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-2">
-              No products found.
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-3">
+              No matching products found.
             </p>
           )}
         </div>
       )}
     </div>
   );
+  
 }
