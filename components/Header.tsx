@@ -68,17 +68,18 @@ export default function Header() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* 🔸 Logo + Text */}
-        <Link
-          href="/"
-          className="flex items-center gap-1 px-5 text-2xl font-extrabold text-white tracking-wide hover:scale-105 transition-transform duration-300"
-        >
-          <img
-            src="/logo.png"
-            alt="Pro Sport Hub Logo"
-            className="w-10 h-10 object-contain"
-          />
-          <span>PRO-SPORT HUB</span>
-        </Link>
+       <Link
+  href="/"
+  className="flex items-center gap-2 px-3 sm:px-5 text-xl sm:text-2xl font-extrabold text-white tracking-wide hover:scale-105 transition-transform duration-300"
+>
+  <img
+    src="/logo.png"
+    alt="Pro Sport Hub Logo"
+    className="w-7 h-7 sm:w-10 sm:h-10 object-contain"
+  />
+  <span className="text-lg sm:text-2xl">PRO-SPORT HUB</span>
+</Link>
+
 
         {/* 🔸 Desktop Nav */}
         <div className="hidden lg:flex lg:gap-x-8">
