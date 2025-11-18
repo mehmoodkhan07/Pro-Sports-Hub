@@ -62,25 +62,24 @@ export default function Header() {
 
   return (
     <header
-      className={`relative top-0 left-0 w-full z-50 transition-all duration-500 backdrop-blur-md ${
-        isScrolled
-          ? "bg-amber-500/95 shadow-lg py-2"
-          : "bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 py-4"
-      }`}
+      className={`relative top-0 left-0 w-full z-50 transition-all duration-500 backdrop-blur-md 
+        bg-amber-500  py-2
+    `}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* 🔸 Logo + Text */}
         <Link
-          href="/"
-          className="flex items-center gap-1 px-5 text-2xl font-extrabold text-white tracking-wide hover:scale-105 transition-transform duration-300"
-        >
-          <img
-            src="/logo.png"
-            alt="Pro Sport Hub Logo"
-            className="w-10 h-10 object-contain"
-          />
-          <span>PRO-SPORT HUB</span>
-        </Link>
+  href="/"
+  className="flex items-center gap-2 px-3 sm:px-5 text-xl sm:text-2xl font-extrabold text-white tracking-wide hover:scale-105 transition-transform duration-300"
+>
+  <img
+    src="/logo.png"
+    alt="Pro Sport Hub Logo"
+    className="w-7 h-7 sm:w-10 sm:h-10 object-contain"
+  />
+  <span className="text-sm sm:text-2xl">PRO-SPORT HUB</span>
+</Link>
+
 
         {/* 🔸 Desktop Nav */}
         <div className="hidden lg:flex lg:gap-x-8">
@@ -112,17 +111,75 @@ export default function Header() {
         </div>
 
         {/* 🔸 Icons (Now visible on ALL screens) */}
-        <div className="flex items-center gap-x-2 sm:gap-x-4">
-          <div className="hidden sm:block">
-            <SearchBar />
+        <div className=" flex items-center gap-x-2">
+          
+        <div className="hidden sm:flex items-center gap-x-2">
+          
+          <div className="hidden sm:flex items-center gap-x-1">
+            <div className="hidden sm:block">
+              <SearchBar />
+            </div>  
+        
+            <div className="hidden sm:block">
+              <UserMenu />
+            </div>
+        
+            <Link href="/checkout" className="hidden sm:block">
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Shopping cart"
+                className="bg-white hover:bg-amber-400 text-amber-600 "
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
+              </Button>
+            </Link>
           </div>
-          <div className="block sm:hidden">
-            {/* Smaller search icon version for mobile */}
-            <SearchBar />
-          </div>
+        
+        </div>
+        
+          {/* Mobile menu button */}
+          <button
+            aria-label="Open menu"
+            className="lg:hidden p-2 rounded-md text-amber-600 hover:bg-white/20 transition"
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
+      </nav>
+
+      {/* 🔸 Mobile Menu */}
+      {mobileMenuOpen && (
+  <div className="lg:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm">
+    <div className="fixed right-0 top-0 w-4/5 max-w-sm bg-amber-200 px-3 py-6 shadow-2xl overflow-y-auto transition-transform duration-300">
+      <div className="flex items-center justify-between mb-6 ">
+        <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+          <span className="text-xl font-bold text-amber-500">Pro-Sport HUB</span>
+        </Link>
+        <button
+          aria-label="Close menu"
+          className="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <X className="h-6 w-6" />
+        </button>
+      </div>
+
+     <div className="lg:hidden flex  justify-end items-center gap-x-1 ">
+       
 
           <UserMenu />
 
+          <div className="block sm:hidden relative">
+            {/* Smaller search icon version for mobile */}
+            <SearchBar />
+          </div>
           <Link href="/checkout" className="relative">
             <Button
               variant="ghost"
@@ -139,34 +196,8 @@ export default function Header() {
             </Button>
           </Link>
 
-          {/* Mobile menu button */}
-          <button
-            aria-label="Open menu"
-            className="lg:hidden p-2 rounded-md text-amber-600 hover:bg-white/20 transition"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <Menu className="h-6 w-6" />
-          </button>
+   
         </div>
-      </nav>
-
-      {/* 🔸 Mobile Menu */}
-      {mobileMenuOpen && (
-  <div className="lg:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm">
-    <div className="fixed right-0 top-0 w-4/5 max-w-sm bg-gradient-to-b from-amber-400 to-yellow-300 px-6 py-6 shadow-2xl overflow-y-auto transition-transform duration-300">
-      <div className="flex items-center justify-between mb-6">
-        <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-          <span className="text-xl font-bold text-amber-800">Pro-Sport HUB</span>
-        </Link>
-        <button
-          aria-label="Close menu"
-          className="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition"
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          <X className="h-6 w-6" />
-        </button>
-      </div>
-
       {/* Mobile Links */}
       <nav className="space-y-2 pb-2">
         {navigation.map((item) => (
@@ -174,7 +205,7 @@ export default function Header() {
             <Link
               href={item.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block rounded-lg px-3 py-1 text-base font-semibold text-gray-900 hover:bg-amber-50 transition"
+              className="block rounded-lg px-3 py-1 text-base font-semibold text-gray-500 hover:bg-amber-50 transition"
             >
               {item.name}
             </Link>

@@ -90,11 +90,11 @@ export default function SearchBar() {
         <div
           className="
             absolute right-1 top-8 
-            w-[61vw] sm:w-80 
+            w-[62vw] sm:w-70 
             bg-white dark:bg-gray-900 
             border border-gray-200 dark:border-gray-700 
             shadow-xl shadow-black/10 
-            rounded-2xl p-2 
+            rounded-2xl py-2 px-0 
             animate-in fade-in slide-in-from-top-3 
             z-50 
           "
@@ -107,7 +107,7 @@ export default function SearchBar() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="
-                flex-grow px-1 py-2 
+                flex-grow px-1 py-2
                 text-sm
                 bg-gray-50 dark:bg-gray-800 
                 border border-gray-300 dark:border-gray-700 
@@ -123,7 +123,7 @@ export default function SearchBar() {
               type="submit"
               className="
                 bg-amber-500 hover:bg-amber-600 
-                text-white  py-2 px-1
+                text-white  py-2 px-0
                 rounded-xl text-sm
                 transition-all shadow-sm
               "
@@ -137,7 +137,7 @@ export default function SearchBar() {
               onClick={() => setSearchOpen(false)}
               className="text-gray-500 hover:text-red-600 transition py-1"
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-4" />
             </button>
           </form>
   
