@@ -80,7 +80,7 @@ export default function SearchBar() {
         size="sm"
         aria-label="Search"
         onClick={() => setSearchOpen(!searchOpen)}
-        className="hover:bg-amber-100 dark:hover:bg-amber-900/30 text-amber-700 dark:text-amber-300 transition-all  p-2"
+        className="bg-white hover:bg-amber-400 text-amber-600 dark:text-amber-300 transition-all  p-2"
       >
         <Search className="h-5 w-5" />
       </Button>
