@@ -69,17 +69,16 @@ export default function Header() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* 🔸 Logo + Text */}
         <Link
-  href="/"
-  className="flex items-center gap-2 px-3 sm:px-5 text-xl sm:text-2xl font-extrabold text-white tracking-wide hover:scale-105 transition-transform duration-300"
->
-  <img
-    src="/logo.png"
-    alt="Pro Sport Hub Logo"
-    className="w-7 h-7 sm:w-10 sm:h-10 object-contain"
-  />
-  <span className="text-sm sm:text-2xl">PRO-SPORT HUB</span>
-</Link>
-
+          href="/"
+          className="flex items-center gap-1 px-5 text-2xl font-extrabold text-white tracking-wide hover:scale-105 transition-transform duration-300"
+        >
+          <img
+            src="/logo.png"
+            alt="Pro Sport Hub Logo"
+            className="w-10 h-10 object-contain"
+          />
+          <span>PRO-SPORT HUB</span>
+        </Link>
 
         {/* 🔸 Desktop Nav */}
         <div className="hidden lg:flex lg:gap-x-8">
@@ -157,8 +156,8 @@ export default function Header() {
       {/* 🔸 Mobile Menu */}
       {mobileMenuOpen && (
   <div className="lg:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm">
-    <div className="fixed right-0 top-0 w-4/5 max-w-sm bg-amber-200 px-3 py-6 shadow-2xl overflow-y-auto transition-transform duration-300">
-      <div className="flex items-center justify-between mb-6 ">
+    <div className="fixed right-0 top-0 w-4/5 max-w-sm bg-gradient-to-b from-amber-400 to-yellow-300 px-6 py-6 shadow-2xl overflow-y-auto transition-transform duration-300">
+      <div className="flex items-center justify-between mb-6">
         <Link href="/" onClick={() => setMobileMenuOpen(false)}>
           <span className="text-xl font-bold text-amber-500">Pro-Sport HUB</span>
         </Link>
