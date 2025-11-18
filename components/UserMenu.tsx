@@ -28,7 +28,7 @@ export default function UserMenu() {
         variant="ghost"
         size="sm"
         aria-label="User menu"
-        className="bg-white hover:bg-amber-400 text-amber-600 dark:text-amber-300 transition-all duration-200 "
+        className="bg-white hover:bg-amber-400 text-amber-600  transition-all duration-200 "
         onClick={() => setOpen(!open)}
       >
         <User className="h-5 w-5" />
